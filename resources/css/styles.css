@@ -1,0 +1,47 @@
+/* GLOBAL VARIABLES*/
+tr > th:first-child,
+tr > td:first-child {
+  text-align: left; }
+
+.state-option-container label {
+  min-width: 100px; }
+
+header h1 {
+  background-image: url("../images/logo-sm.PNG");
+  background-size: cover;
+  background-repeat: none;
+  text-indent: -99999rem;
+  height: 87.5px;
+  width: 118px;
+  display: block; }
+header nav {
+  background-color: rgba(0, 0, 0, 0.05);
+  border: black solid 1px; }
+header a.email-link:before {
+  content: "";
+  background-image: url("../images/mail-24.png");
+  background-size: cover;
+  background-repeat: none;
+  display: block;
+  float: left;
+  position: relative;
+  height: 1.5em;
+  width: 1.5em;
+  margin-right: .5em; }
+
+footer {
+  background-color: rgba(0, 0, 0, 0.05);
+  border: black solid 1px;
+  padding: .5em; }
+  footer p {
+    margin: 0; }
+    footer p:first-of-type {
+      padding-right: 0.5em;
+      margin-right: 0.5em;
+      border-right: solid black 1px; }
+
+@media (max-width: 768px) {
+  .filters-container {
+    flex-flow: column; } }
+
+/*# sourceMappingURL=styles.css.map */

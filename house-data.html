@@ -10,30 +10,89 @@
 			integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
 			crossorigin="anonymous"
 		/>
+		<link rel="stylesheet" href="resources/css/styles.css">
 		<title>House Data</title>
 	</head>
 	<body>
 		<div class="container">
-            <header class="container">
-                <div class="row">
-                    <h1 class="col-8">TGIF Logo</h1>
-                    <a class ="col-4 text-right" href="email:info@tgif.net">info@tgif.net</a>
-                </div>
-                <ul class="row nav nav-tabs">
-                    <li class="nav-item">
-                      <a class="nav-link" href="index.html">Home</a>
-                    </li>
-                    <li class="nav-item dropdown">
-                      <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Congress 113</a>
-                      <div class="dropdown-menu">
-                        <a class="dropdown-item" href="house-data.html">House</a>
-                        <a class="dropdown-item" href="senate-data.html">Senate</a>
-                      </div>
-                    </li>
-                  </ul>
-                </header>
-			<table id="table-data" class="table table-striped text-center"></table>
+			<header class="container">
+				<div class="row d-flex justify-content-between align-items-center">
+					<h1>TGIF Logo</h1>
+					<a class="email-link" href="mailto:info@tgif.net">info@tgif.net</a>
+				</div>
+				<nav class="row">
+					<ul class="nav nav-tabs nav-bar">
+						<li class="nav-item">
+							<a class="nav-link" href="index.html">Home</a>
+						</li>
+						<li class="nav-item dropdown">
+							<a
+								class="nav-link dropdown-toggle"
+								data-toggle="dropdown"
+								href="#"
+								role="button"
+								aria-haspopup="true"
+								aria-expanded="false"
+								>Congress 113</a
+							>
+							<div class="dropdown-menu">
+								<a class="dropdown-item" href="house-data.html">House</a>
+								<a class="dropdown-item" href="senate-data.html">Senate</a>
+							</div>
+						</li>
+					</ul>
+				</nav>
+			</header>
+			<article class="container">
+				<h2>Congressmen</h2>
+				<p class="col-md-8">
+					Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi id debitis odio sapiente, itaque
+					corrupti laborum corporis velit tempore, quae nobis perferendis! Aut magnam cumque rem iure
+					quas aperiam in! Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quam magnam
+					assumenda, cupiditate laborum voluptas eligendi sapiente mollitia voluptatibus inventore
+					aliquam magni eaque quas expedita sit voluptatum recusandae quasi, exercitationem eius.
+				</p>
+			</article>
+			<div class="container">
+				<div class="filters-container d-flex justify-content-between">
+					<div class="checkbox-container d-flex justify-content-start">
+						<p>Filter party by:</p>
+						<div class="form-check">
+							<label for="republican-check">
+								<input type="checkbox" id="republican-check">
+								Republican
+							</label>
+						</div>
+						<div class="form-check">
+							<label for="democrat-check">
+								<input type="checkbox" id="democrat-check">
+								Democrat
+							</label>
+						</div>
+						<div class="form-check">
+							<label for="independant-check">
+								<input type="checkbox" id="independant-check">
+								Independant
+							</label>
+						</div>
+					</div>
+					<div class="state-option-container d-flex">
+						<div class="form-group d-flex justify-content-end">
+							<label for="state-option">Select list:</label>
+							<select class="form-control" id="state-option">
+							  <!-- options to be injected by JS-->
+							</select>
+						  </div>
+					</div>
+				</div>
+				<table id="table-data" class="table table-striped text-center"></table>
+			</div>
+			<footer class="col-12 d-flex justify-content-center align-items-center">
+				<p>&#9400; 2016 TGIF</p>
+				<p>All Rights Reserverd</p>
+			</footer>
 		</div>
+
 		<script
 			src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
 			integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"

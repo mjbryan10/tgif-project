@@ -1,0 +1,62 @@
+/* GLOBAL VARIABLES*/
+$light-grey: rgba(0,0,0,.05);
+$border-black: black solid 1px;
+
+
+tr > th:first-child,
+tr > td:first-child {
+	text-align: left;
+}
+.state-option-container label {
+	min-width: 100px;
+}
+header {
+	h1 {
+        background-image: url('../images/logo-sm.PNG');
+        background-size: cover;
+        background-repeat: none;
+        text-indent:-99999rem;
+        height: 87.5px;
+        width: 118px;
+        display: block;
+
+    }
+    nav {
+        background-color: $light-grey;
+        border: $border-black;
+    }
+	a.email-link {
+		&:before {
+			content: "";
+            background-image: url('../images/mail-24.png');
+            background-size: cover;
+            background-repeat: none;
+            display: block;
+            float: left;
+			position: relative;
+            height: 1.5em;
+            width:  1.5em;
+            margin-right: .5em;
+			
+		}
+	}
+}
+footer {
+    background-color: $light-grey;
+    border: $border-black;
+    padding: .5em;
+    p {
+        margin:0;
+        &:first-of-type {
+            $border-distance: .5em;
+            padding-right: $border-distance;
+            margin-right: $border-distance;
+            border-right: solid black 1px;
+        }
+    }
+}
+@media (max-width: 768px) {
+	.filters-container {
+		flex-flow: column;
+	}
+}
