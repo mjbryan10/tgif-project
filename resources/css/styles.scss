@@ -11,6 +11,7 @@ tr > td:first-child {
 	min-width: 100px;
 }
 header {
+    margin-bottom: 1.5rem;
 	h1 {
         background-image: url('../images/logo-sm.PNG');
         background-size: cover;
@@ -41,6 +42,24 @@ header {
 		}
 	}
 }
+article.container {
+    .text-container{
+        max-width: 70%;
+        margin:0;
+        p:first-of-type {
+            text-indent: 2em;
+        }
+        #more_text p:first-of-type {
+            text-indent: 0;
+        }
+    }
+    img {
+        width: 337px;
+        height:249px;
+        // max-width: 30%;
+
+    }
+}
 footer {
     background-color: $light-grey;
     border: $border-black;
@@ -58,5 +77,13 @@ footer {
 @media (max-width: 768px) {
 	.filters-container {
 		flex-flow: column;
-	}
+    }
+    article.container {
+        .text-container, img {
+            max-width: 100%;
+            margin:0 auto;
+
+        }
+        flex-direction: column-reverse;
+    }
 }
