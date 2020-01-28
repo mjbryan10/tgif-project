@@ -54,8 +54,10 @@ function generateTableBody(table, data, inclusions) {
                     }
                     if (key === "last_name") {
                         let cell = row.insertCell();
-                        let text = document.createTextNode(fullName);
-                        cell.appendChild(text);
+                        let text = `<a href="${element.url}">${fullName}</a>`
+                        cell.innerHTML = text;
+                        // let text = document.createTextNode(fullName);
+                        // cell.appendChild(text);
                     }
                 } else {
                     let cell = row.insertCell();
