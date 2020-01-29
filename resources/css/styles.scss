@@ -79,10 +79,17 @@ footer {
 		flex-flow: column;
     }
     article.container {
+
         .text-container, img {
             max-width: 100%;
             margin:0 auto;
 
+        }
+        .tables-container { //Need to fix tables at bottom with screen width small
+            &>div {
+                display: block;
+            }
+            flex-flow: column;
         }
         flex-direction: column-reverse;
     }

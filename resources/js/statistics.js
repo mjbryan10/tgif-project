@@ -19,13 +19,16 @@ var statistics = {
     n_democrats: 0,
     n_republicans: 0,
     n_independents: 0,
+    avg_vote_with_democrats: 0,
+    avg_vote_with_republicans: 0,
+    avg_vote_with_independents: 0,
 }
 var party_members = {
     democrats: [],
     republicans: [],
     independents: []
 }
-function generatePartyList() {
+function generatePartyList() {//populates obj with array of party members
     let members = data.results[0].members;
     for (const member of members) {
         switch (member.party) {
@@ -43,28 +46,85 @@ function generatePartyList() {
         }
     }
 }
-function updateStatistics(){
-    generatePartyList();
-    statistics.n_democrats = party_members.democrats.length;
-    statistics.n_republicans = party_members.republicans.length;
-    statistics.n_independents = party_members.independents.length;
-}
-updateStatistics();
-console.log("TCL:", statistics.n_democrats)
 
-function popluateTable(table, row, col, input){
+function averageVotesWith(party) {
+    let partyMembers = party_members[party];
+    let sumOf = 0;
+    for (const member of partyMembers) {
+        sumOf += member.votes_with_party_pct;
+    }
+    let result = (sumOf / partyMembers.length).toFixed(2);
+    return result;
+}
+
+
+function updateStatistics() {
+    generatePartyList();
+    let parties = ['republicans', 'democrats', 'independents'];
+    for (const party of parties) { //DRY
+        statistics[`avg_vote_with_${party}`] = averageVotesWith(`${party}`);
+        statistics[`n_${party}`] = party_members[`${party}`].length;
+    }
+}
+
+function sortMembers(property, reverse = false) {
+    let dataset = data.results[0].members;
+    let new_dataset = dataset.slice();
+    function compare(a, b) {
+        if (reverse === true) {
+            return b[`${property}`] - a[`${property}`];
+        }
+        return a[`${property}`] - b[`${property}`];
+    }
+    return new_dataset.sort(compare);
+}
+
+
+
+
+// --- TABLES
+function popluateTable(table, row, col, input) { //Table populating helper
     let tableRow = table.getElementsByTagName('tr')[row];
     let tableCol = tableRow.getElementsByTagName('td')[col];
     tableCol.innerHTML = input;
 }
-function popluateGlance(){
+function popluateGlance() {
     let theTable = document.querySelector('.tbl-glance');
-    let parties = ['republicans', 'democrats', 'independents'];
     let repCol = 1, voteCol = 2, partyRow = 1;
+    let parties = ['republicans', 'democrats', 'independents'];
     for (const party of parties) {
         popluateTable(theTable, partyRow, repCol, statistics[`n_${party}`]);
+        popluateTable(theTable, partyRow, voteCol, statistics[`avg_vote_with_${party}`]);
         partyRow++;
     }
 }
-popluateGlance();
-// console.log("TCL: dataTest", members)
+function popEngageTbls(){
+    let leastTbl = document.querySelector('.tbl-bot-attend tbody');
+    let mostTbl = document.querySelector('.tbl-top-attend tbody');
+    let leastArray = sortMembers('missed_votes_pct');
+    let mostArray = sortMembers('missed_votes_pct', true);
+    let pct10 = (leastArray.length / 100 )* 10;
+    for (let i = pct10; i > 0; i--) {
+        const leastMember = leastArray[i];
+        let leasthtml = `<tr><td>${leastMember.first_name} ${leastMember.middle_name || ''} ${leastMember.last_name}</td><td>${leastMember.missed_votes}</td><td>${leastMember.missed_votes_pct}</td></tr>`
+        leastTbl.insertAdjacentHTML('afterbegin', leasthtml);
+        
+        const mostMember = mostArray[i];
+        let mosthtml = `<tr><td>${mostMember.first_name} ${mostMember.middle_name || ''} ${mostMember.last_name}</td><td>${mostMember.missed_votes}</td><td>${leastMember.missed_votes_pct}</td></tr>`
+        mostTbl.insertAdjacentHTML('afterbegin', mosthtml);
+    }
+
+}
+
+
+
+
+window.onload = () => {
+    updateStatistics();
+    popluateGlance();
+    popEngageTbls();
+}
+
+
+
+
