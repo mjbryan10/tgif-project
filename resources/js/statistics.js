@@ -126,9 +126,6 @@ function popLoyalTbls(table1, table2) {
 window.onload = () => {
     updateStatistics();
     popluateGlance();
-    // popEngageTbls('.tbl-bot-attend', '.tbl-top-attend');
-    
-    // insertRows10pct('.tbl-bot-attend', sortMembers('missed_votes_pct'), 'missed_votes', 'missed_votes_pct');
 }
 
 
