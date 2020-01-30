@@ -39,8 +39,10 @@ function generateTableHead(table, data_set, inclusions) {
 }
 //REFACTORED
 function generateTableBody(table, data, inclusions, filters = []) {
+    let states = [];
     for (let element of data) {
         if ((filters.includes(element.party)) || (filters.length === 0)) {
+            states.push(element.state);
             let row = table.insertRow();
             let fullName = `${element.first_name} ${element.middle_name || ''} ${element.last_name}`
             for (let key in element) {
@@ -58,6 +60,17 @@ function generateTableBody(table, data, inclusions, filters = []) {
             }  
         }
     }
+    popStateList(states);
+}
+function popStateList(arr) {
+    let stateList = document.querySelector('#state-option');
+    arr.sort(); //Orgainises alphabetically
+    arr = Array.from(new Set(arr)); //Removes duplicates
+    arr.forEach(state => {
+        let htmlStr =  `<option value="${state}">${state}</option>`
+        stateList.insertAdjacentHTML('beforeend', htmlStr);
+    });
+    console.log(arr.length);
 }
 //Refactored and brought in from filters.js
 let checkboxes = document.querySelectorAll('input[type=checkbox]');
@@ -65,15 +78,16 @@ for (const checkbox of checkboxes) {
         checkbox.addEventListener('change', checkFilter);
     }
 function checkFilter() {
-    let filterArr = [];
+    let filterPartyArr = [];
+    let filterLocArr = [];
     for (const check of checkboxes) {
         // checkbox.addEventListener('change', checkFilter);
         if (check.checked) {
-            filterArr.push(check.value)
+            filterPartyArr.push(check.value)
         }
     }
     tableTag.innerHTML = '';
-    generateTableBody(tableTag, data.results[0].members,inclusionList, filterArr);
+    generateTableBody(tableTag, data.results[0].members,inclusionList, filterPartyArr);
     generateTableHead(tableTag, data.results[0].members[0], inclusionList);
 }
 window.onload = () => {
