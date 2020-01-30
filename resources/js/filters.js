@@ -1,18 +1,43 @@
-// let checkboxes = document.querySelectorAll('input[type=checkbox]');
-// for (const checkbox of checkboxes) {
-//     checkbox.addEventListener('change', checkFilter);
-// }
-// function checkFilter() {
-//     let filterArr = [];
-//     for (const check of checkboxes) {
-//         if (check.checked) {
-//             filterArr.push(check.value)
-//         }
-//     }
-//     tableTag.innerHTML = '';
-//     generateTableBody(tableTag, data.results[0].members,inclusionList, filterArr);
-//     generateTableHead(tableTag, data.results[0].members[0], inclusionList);
-// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+let checkboxes = document.querySelectorAll('input[type=checkbox]');
+for (const checkbox of checkboxes) {
+    checkbox.addEventListener('change', checkFilter);
+}
+function checkFilter() {
+    let filterArr = [];
+    for (const check of checkboxes) {
+        if (check.checked) {
+            filterArr.push(check.value)
+        }
+    }
+    tableTag.innerHTML = '';
+    generateTableBody(tableTag, data.results[0].members,inclusionList, filterArr);
+    generateTableHead(tableTag, data.results[0].members[0], inclusionList);
+}
+/*
 /*
 function generateTableBody2(table, data, inclusions, filters) {
     for (let element of data) {
