@@ -89,6 +89,9 @@ function popluateGlance() { // Populates the at a glance tables
 function insertRows10pct(table, array, prop2, prop3) { // refactored from populateEngageTbls
     let tableTarget = document.querySelector(table);
     let pct10 = Math.floor((array.length / 100) * 10);
+    while (array[pct10][prop3] === array[pct10+1][prop3]) {
+        pct10++
+    }
     for (let i = pct10; i > 0; i--) {
         const member = array[i];
         let fullName = `${member.first_name} ${member.middle_name || ''} ${member.last_name}`
@@ -97,8 +100,8 @@ function insertRows10pct(table, array, prop2, prop3) { // refactored from popula
     }
 }
 function popEngageTbls(table1, table2) { //Needs to be on specific page?
-    insertRows10pct(table1, sortMembers('missed_votes_pct'), 'total_votes', 'missed_votes_pct');
-    insertRows10pct(table2, sortMembers('missed_votes_pct', true), 'total_votes', 'missed_votes_pct');
+    insertRows10pct(table1, sortMembers('missed_votes_pct', true), 'total_votes', 'missed_votes_pct');
+    insertRows10pct(table2, sortMembers('missed_votes_pct'), 'total_votes', 'missed_votes_pct');
 }
 function popLoyalTbls(table1, table2) {
     insertRows10pct(table1, sortMembers('votes_with_party_pct'), 'total_votes', 'votes_with_party_pct');
