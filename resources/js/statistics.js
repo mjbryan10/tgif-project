@@ -114,12 +114,12 @@ function insertRows10pct(table, array, prop2, prop3){ // refactored from populat
     }
 }
 function popEngageTbls(table1, table2){ //Needs to be on specific page?
-    insertRows10pct(table1, sortMembers('missed_votes_pct'), 'missed_votes', 'missed_votes_pct');
-    insertRows10pct(table2, sortMembers('missed_votes_pct', true), 'missed_votes', 'missed_votes_pct');
+    insertRows10pct(table1, sortMembers('missed_votes_pct'), 'total_votes', 'missed_votes_pct');
+    insertRows10pct(table2, sortMembers('missed_votes_pct', true), 'total_votes', 'missed_votes_pct');
 }
 function popLoyalTbls(table1, table2) {
-    insertRows10pct(table1, sortMembers('votes_with_party_pct'), 'missed_votes', 'votes_with_party_pct');
-    insertRows10pct(table2, sortMembers('votes_with_party_pct', true), 'missed_votes', 'votes_with_party_pct');
+    insertRows10pct(table1, sortMembers('votes_with_party_pct'), 'total_votes', 'votes_with_party_pct');
+    insertRows10pct(table2, sortMembers('votes_with_party_pct', true), 'total_votes', 'votes_with_party_pct');
 
 }
 

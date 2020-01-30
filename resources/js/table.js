@@ -56,8 +56,6 @@ function generateTableBody(table, data, inclusions) {
                         let cell = row.insertCell();
                         let text = `<a href="${element.url}">${fullName}</a>`
                         cell.innerHTML = text;
-                        // let text = document.createTextNode(fullName);
-                        // cell.appendChild(text);
                     }
                 } else {
                     let cell = row.insertCell();
