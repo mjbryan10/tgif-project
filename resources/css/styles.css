@@ -42,6 +42,10 @@ article.container img {
   width: 337px;
   height: 249px; }
 
+.container table {
+  max-height: 1000px;
+  overflow-y: scroll; }
+
 footer {
   background-color: rgba(0, 0, 0, 0.05);
   border: black solid 1px;
@@ -53,12 +57,18 @@ footer {
       margin-right: 0.5em;
       border-right: solid black 1px; }
 
+.tables-container {
+  flex-flow: row wrap;
+  justify-content: space-between; }
+
 @media (max-width: 768px) {
   .filters-container {
     flex-flow: column; }
 
   article.container {
     flex-direction: column-reverse; }
+    article.container div {
+      flex-flow: column; }
     article.container .text-container, article.container img {
       max-width: 100%;
       margin: 0 auto; } }

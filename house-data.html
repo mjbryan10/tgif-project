@@ -22,7 +22,7 @@
 				</div>
 				<nav class="row">
 					<ul class="nav nav-tabs nav-bar">
-						<li class="nav-item">
+						<li class="nav-item active">
 							<a class="nav-link" href="home.html">Home</a>
 						</li>
 						<li class="nav-item dropdown">
@@ -38,6 +38,24 @@
 							<div class="dropdown-menu">
 								<a class="dropdown-item" href="house-data.html">House</a>
 								<a class="dropdown-item" href="senate-data.html">Senate</a>
+							</div>
+						</li>
+						<li class="nav-item dropdown">
+							<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+								Attendance
+							</a>
+							<div class="dropdown-menu">
+								<a class="dropdown-item" href="attendance-house.html">House</a>
+								<a class="dropdown-item" href="attendance-senate.html">Senate</a>
+							</div>
+						</li>
+						<li class="nav-item dropdown">
+							<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+								Party Loyalty
+							</a>
+							<div class="dropdown-menu">
+								<a class="dropdown-item" href="loyalty-house.html">House</a>
+								<a class="dropdown-item" href="loyalty-senate.html">Senate</a>
 							</div>
 						</li>
 					</ul>
@@ -61,19 +79,19 @@
 						<p>Filter party by:</p>
 						<div class="form-check">
 							<label for="republican-check">
-								<input type="checkbox" id="republican-check">
+								<input type="checkbox" id="republican-check" value="R">
 								Republican
 							</label>
 						</div>
 						<div class="form-check">
 							<label for="democrat-check">
-								<input type="checkbox" id="democrat-check">
+								<input type="checkbox" id="democrat-check" value="D">
 								Democrat
 							</label>
 						</div>
 						<div class="form-check">
 							<label for="independant-check">
-								<input type="checkbox" id="independant-check">
+								<input type="checkbox" id="independant-check" value="I">
 								Independant
 							</label>
 						</div>
@@ -112,5 +130,6 @@
 		></script>
 		<script src="resources/data/pro-congress-113-house.js"></script>
 		<script src="resources/js/table.js"></script>
+		<script src="resources/js/filters.js"></script>
 	</body>
 </html>

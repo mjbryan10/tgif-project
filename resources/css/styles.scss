@@ -60,6 +60,12 @@ article.container {
 
     }
 }
+.container table {
+    // display: block;
+    // width: 100%;
+    max-height: 1000px;
+    overflow-y: scroll;
+}
 footer {
     background-color: $light-grey;
     border: $border-black;
@@ -74,11 +80,21 @@ footer {
         }
     }
 }
+.tables-container { //Need to fix tables at bottom with screen width small
+    flex-flow: row wrap;
+    justify-content: space-between;
+    
+    
+    
+}
 @media (max-width: 768px) {
 	.filters-container {
 		flex-flow: column;
     }
     article.container {
+        div {
+            flex-flow: column;
+        }
         .text-container, img {
             max-width: 100%;
             margin:0 auto;
