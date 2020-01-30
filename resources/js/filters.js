@@ -1,10 +1,38 @@
 
 
 
+function popStateList(arr) {
+    let stateList = document.querySelector('#state-option');
+    // let currentItemValue = document.querySelector('#state-option option:checked');
+    // stateList.innerHTML = `<option value="all">All</option> <option value="${currentItem}">${currentItem}</option>`;
+    arr.sort(); //Orgainises alphabetically
+    arr = Array.from(new Set(arr)); //Removes duplicates
+    let stateOptions = stateList.getElementsByTagName('option');
+    let optValArr = [];
+    for (let i = 0; i < stateOptions.length; i++) {
+        const opt = stateOptions[i];
+        optValArr.push(opt.value);
+    }
+    arr.forEach(state => {
+        if (!optValArr.includes(state)) {
+            let htmlStr =  `<option value="${state}">${state}</option>`
+            stateList.insertAdjacentHTML('beforeend', htmlStr);
+            
+        }
+    });
+}
 
 
-
-
+function popStateList(arr) {
+    let stateList = document.querySelector('#state-option');
+    stateList.innerHTML = `<option value="all">All</option>`;
+    arr.sort(); //Orgainises alphabetically
+    arr = Array.from(new Set(arr)); //Removes duplicates
+    arr.forEach(state => {
+        let htmlStr =  `<option value="${state}">${state}</option>`
+        stateList.insertAdjacentHTML('beforeend', htmlStr);
+    });
+}
 
 
 
