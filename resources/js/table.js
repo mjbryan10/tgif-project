@@ -15,8 +15,15 @@ let inclusionList = [
 String.prototype.capitalize = function() {
     return this.charAt(0).toUpperCase() + this.slice(1);
 }
+//TESTING
+function removeElementbyValue(elementVal) {
+    // Removes an element from the document by value
+    //CAN ONLY BE UNIQUE VALUE
+    var element = document.querySelector(`*[value='${elementVal}']`);
+    element.parentNode.removeChild(element);
+}
 // ---
-//REFACTORED
+
 function generateTableHead(table, data_set, inclusions) {
     //takes data keys, targets html table and populates a header
     let thead = table.createTHead();
@@ -37,14 +44,19 @@ function generateTableHead(table, data_set, inclusions) {
         }
     }
 }
-//REFACTORED
+
 function generateTableBody(table, data, inclusions, filters = [], stateFilter) {
-    let states = [];
-    for (let element of data) {
+    let states = []; //To be filled per iteration and then popped
+    let possibleParties = []; //Array of parties of members displayed 
+    for (let element of data) { //element == member
+        if((element.state === stateFilter) || (stateFilter === 'All')){
+            possibleParties.push(element.party);
+            //pop array with possible parties with current statefilter
+        }
         if ((filters.includes(element.party)) || (filters.length === 0)){
             //checks when checkboxes and allows them to pop (if none then all)
-            states.push(element.state);
-            if((element.state === stateFilter) || (stateFilter === 'all')){
+            states.push(element.state); //builds states array
+            if((element.state === stateFilter) || (stateFilter === 'All')){
                 //checks selected state -> pops that, if 'all' then pops all
                 let row = table.insertRow();
                 let fullName = `${element.first_name} ${element.middle_name || ''} ${element.last_name}`
@@ -64,39 +76,60 @@ function generateTableBody(table, data, inclusions, filters = [], stateFilter) {
             }
         }
     }
+    disableCheck(possibleParties);
     popStateList(states);
 }
-function popStateList(arr) {
-    let stateList = document.querySelector('#state-option');
-    arr.sort(); //Orgainises alphabetically
-    arr = Array.from(new Set(arr)); //Removes duplicates
-    let stateOptions = stateList.getElementsByTagName('option');
-    let optValArr = [];
-    for (let i = 0; i < stateOptions.length; i++) {
-        const opt = stateOptions[i];
-        optValArr.push(opt.value);
+
+function disableCheck(arr){ //disables the invalid parties with current filter
+    const rCheck = document.getElementById('republican-check');
+    const dCheck = document.getElementById('democrat-check');
+    const iCheck = document.getElementById('independent-check');
+    let checkboxes = document.querySelectorAll('input[type=checkbox]');
+    for (const checkbox of checkboxes) {
+        checkbox.disabled = false;
     }
-    arr.forEach(state => {
-        if (!optValArr.includes(state)) {
-            let htmlStr =  `<option value="${state}">${state}</option>`
-            stateList.insertAdjacentHTML('beforeend', htmlStr);
-        }
-    });
+    if (!(arr.includes('R'))) {
+        rCheck.disabled = true;
+    } if (!(arr.includes('D'))) {
+        dCheck.disabled = true;
+    } if (!(arr.includes('I'))) {
+        iCheck.disabled = true;
+    }
 }
+
+function popStateList(arr) { //Prototype
+    let stateList = document.querySelector('#state-option');
+    arr = Array.from(new Set(arr)); //Removes duplicates
+    arr.sort(); //Orgainises alphabetically
+    // let stateOptions = stateList.getElementsByTagName('option');
+    let currentOpt = stateList.querySelector('option:checked');
+    stateList.innerHTML = '';
+    
+    arr.unshift('All');
+    for (let i = 0; i < arr.length; i++) {
+        const state = arr[i];
+        let htmlStr =  `<option value="${state}">${state}</option>`
+        stateList.insertAdjacentHTML('beforeend', htmlStr);
+        if (state == currentOpt.value) {
+            stateList.selectedIndex = i;
+        }
+    }
+}
+
 //Refactored and brought in from filters.js
-let checkboxes = document.querySelectorAll('input[type=checkbox]');
 let stateList = document.querySelector('#state-option');
 stateList.addEventListener('change', checkFilter);
+let checkboxes = document.querySelectorAll('input[type=checkbox]');
 for (const checkbox of checkboxes) {
         checkbox.addEventListener('change', checkFilter);
     }
 function checkFilter() {
     let filterPartyArr = [];
-    let filterState = 'all';
+    let filterState = 'All';
     filterState = stateList.value;
     for (const check of checkboxes) {
         if (check.checked) {
-            filterPartyArr.push(check.value)
+            filterPartyArr.push(check.value);
         }
     }
     tableTag.innerHTML = '';
