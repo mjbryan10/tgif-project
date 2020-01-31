@@ -1,33 +1,62 @@
-//DATA ---
-let tableTag = document.getElementById("table-data");
-let dataSet = data.results[0].members;
-let inclusionList = [
-    "first_name",
-    "middle_name",
-    "last_name",
-    "party",
-    "state",
-    "seniority",
-    "votes_with_party_pct"
-];
-// ---
+//GLOBAL VARIABLES
+let stateList = document.querySelector('#state-option');
+let checkboxes = document.querySelectorAll('input[type=checkbox]');
+//ASYNC ---
+let members = [];
+const getData = async (url) => {
+    members = await fetch(url, {
+        method: "GET",
+        headers: {
+            "X-API-Key": "T52gp8pFQzvOnof9mUsb0wOdHLARM6ZlEza0hTn2"
+        }
+    })
+        .then(response => response.json())
+        .then(data => data.results[0].members)
+
+    stateList.addEventListener('change', updateTable);
+
+    for (const checkbox of checkboxes) {
+        checkbox.addEventListener('change', updateTable);
+    }
+
+    updateTable();
+
+}
+window.onload = () => { //Runs on load to start Async
+    const house113API = 'https://api.propublica.org/congress/v1/113/house/members.json';
+    getData(house113API);
+};
+
+//FUNCTIONS ++++++++++++
+
 // HELPER FUNCTIONS --- 
 String.prototype.capitalize = function () {
     return this.charAt(0).toUpperCase() + this.slice(1);
 }
 //TABLE GENERATORS 
 function updateTable() {
+    // let filterState = 'All';
+    let filterState = stateList.value; //Filterstate 
+
     let filterPartyArr = [];
-    let filterState = 'All';
-    filterState = stateList.value;
     for (const check of checkboxes) {
         if (check.checked) {
             filterPartyArr.push(check.value);
         }
     }
+    let tableTag = document.getElementById("table-data"); //The Table
     tableTag.innerHTML = '';
-    generateTableBody(tableTag, data.results[0].members, inclusionList, filterPartyArr, filterState);
-    generateTableHead(tableTag, data.results[0].members[0], inclusionList);
+    let inclusionList = [
+        "first_name",
+        "middle_name",
+        "last_name",
+        "party",
+        "state",
+        "seniority",
+        "votes_with_party_pct"
+    ];
+    generateTableBody(tableTag, members, inclusionList, filterPartyArr, filterState);
+    generateTableHead(tableTag, members[0], inclusionList);
 }
 function generateTableHead(table, data_set, inclusions) {
     //takes data keys, targets html table and populates a header
@@ -89,7 +118,6 @@ function disableCheck(arr) { //disables the invalid parties with current filter
     const rCheck = document.getElementById('republican-check');
     const dCheck = document.getElementById('democrat-check');
     const iCheck = document.getElementById('independent-check');
-    let checkboxes = document.querySelectorAll('input[type=checkbox]');
     for (const checkbox of checkboxes) {
         checkbox.disabled = false;
     }
@@ -124,49 +152,37 @@ function disabledMsg(parties) {
         document.getElementById('reset_state_btn').addEventListener('click', resetTable)
     }
 }
-function resetTable(){
-    let stateList = document.querySelector('#state-option');
+function resetTable() {
     let opts = stateList.querySelectorAll('option');
     let val = 'All';
-    for (let i = 0; i < opts.length; i++) {
+    for (let i = 0; i < opts.length; i++) { //Sets statelist back to all
         const opt = opts[i];
         if (opt.value == val) {
             stateList.selectedIndex = i;
             break;
         }
     }
-    let checkboxes = document.querySelectorAll('input[type=checkbox]');
-    for (const checkbox of checkboxes) {
+    for (const checkbox of checkboxes) { //Clears checkboxes
         checkbox.checked = false;
     }
     updateTable();
 }
 //SELECT LIST FUNCTION
 function popStateList(arr) { //Prototype
-    let stateList = document.querySelector('#state-option');
     arr = Array.from(new Set(arr)); //Removes duplicates
-    arr.sort(); //Orgainises alphabetically
+    arr.sort(); //Organises alphabetically
     let currentOpt = stateList.querySelector('option:checked');
-    stateList.innerHTML = '';
-
-    arr.unshift('All');
-    for (let i = 0; i < arr.length; i++) {
+    stateList.innerHTML = ''; //Clears options
+    arr.unshift('All');//Adds all to options
+    for (let i = 0; i < arr.length; i++) { //Inserts HTML
         const state = arr[i];
         let htmlStr = `<option value="${state}">${state}</option>`
         stateList.insertAdjacentHTML('beforeend', htmlStr);
-        if (state == currentOpt.value) {
+        if (state == currentOpt.value) { //Sets option index to the one selected
             stateList.selectedIndex = i;
         }
     }
 }
 
-//Global Event Listners
-let stateList = document.querySelector('#state-option');
-stateList.addEventListener('change', updateTable);
-let checkboxes = document.querySelectorAll('input[type=checkbox]');
-for (const checkbox of checkboxes) {
-    checkbox.addEventListener('change', updateTable);
-}
-window.onload = () => { //Runs on load to Gen table.
-    updateTable();
-};
+
+

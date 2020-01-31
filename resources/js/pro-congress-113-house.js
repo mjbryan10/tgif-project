@@ -1,6 +1,6 @@
-let house113API = 'https://api.propublica.org/congress/v1/113/house/members.json';
 let senate113API = 'https://api.propublica.org/congress/v1/113/senate/members.json';
-
+let house113API = 'https://api.propublica.org/congress/v1/113/house/members.json';
+const data =
 fetch(house113API, {
     method: "GET",
     headers: {
@@ -9,8 +9,9 @@ fetch(house113API, {
 })
 .then(resp => resp.json())
 .then((data) => {
+    // data = data;
     console.log("TCL: data", data)
 })
 .catch(function(){
-    console.error('API Failure...');
-})
+    console.error('API fetch error.');
+});
