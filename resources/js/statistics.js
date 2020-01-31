@@ -12,8 +12,8 @@ var party_members = {
     republicans: [],
     independents: []
 }
+let page = document.querySelector('body div').getAttribute('data-page-type');
 let congress = document.querySelector('body div').getAttribute('data-congress-type');
-console.log("TCL: congress", congress)
 let apiURL = `https://api.propublica.org/congress/v1/113/${congress}/members.json`
 //ASYNC ---
 let members = [];
@@ -29,6 +29,11 @@ const getData = async (url) => {
 
     updateStatistics();
     popluateGlance();
+    if (page == 'attendance'){
+        popEngageTbls('.tbl-bot-attend tbody', '.tbl-top-attend tbody');
+    } else if (page == 'loyalty'){
+        popLoyalTbls('.tbl-bot-loyal tbody', '.tbl-top-loyal tbody');
+    }
 
 }
         
@@ -78,9 +83,7 @@ function updateStatistics() { // Updates the stats so the other functions can ru
 }
 
 function sortMembers(property, reverse = false) { // Sorts the members list by given property
-    console.log("TCL: sortMembers -> members", members)
     let new_dataset = members.slice();
-    console.log("TCL: sortMembers -> new_dataset", new_dataset)
     function compare(a, b) {
         if (reverse === true) {
             return b[`${property}`] - a[`${property}`];
@@ -124,8 +127,8 @@ function insertRows10pct(table, array, prop2, prop3) { // refactored from popula
     }
 }
 function popEngageTbls(table1, table2) { //Needs to be on specific page?
-    insertRows10pct(table1, sortMembers('missed_votes_pct', true), 'total_votes', 'missed_votes_pct');
-    insertRows10pct(table2, sortMembers('missed_votes_pct'), 'total_votes', 'missed_votes_pct');
+    insertRows10pct(table1, sortMembers('missed_votes_pct', true), 'missed_votes', 'missed_votes_pct');
+    insertRows10pct(table2, sortMembers('missed_votes_pct'), 'missed_votes', 'missed_votes_pct');
 }
 function popLoyalTbls(table1, table2) {
     insertRows10pct(table1, sortMembers('votes_with_party_pct'), 'total_votes', 'votes_with_party_pct');
