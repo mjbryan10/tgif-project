@@ -85,15 +85,36 @@ function disableCheck(arr){ //disables the invalid parties with current filter
     const dCheck = document.getElementById('democrat-check');
     const iCheck = document.getElementById('independent-check');
     let checkboxes = document.querySelectorAll('input[type=checkbox]');
+    let parties = [];
     for (const checkbox of checkboxes) {
         checkbox.disabled = false;
     }
     if (!(arr.includes('R'))) {
         rCheck.disabled = true;
+        parties.push('Reublicans');
     } if (!(arr.includes('D'))) {
         dCheck.disabled = true;
+        parties.push('Democrats');
     } if (!(arr.includes('I'))) {
         iCheck.disabled = true;
+        parties.push('Independents');
+    }
+    disabledMsg(parties);
+}
+
+function disabledMsg(parties){
+    let checkDiv = document.querySelector('.filters-container');
+    let newDiv = document.querySelector('.disable-msg');
+    if (newDiv){
+        newDiv.parentNode.removeChild(newDiv);
+    }
+    if (parties.length > 0) {
+        let partyText = parties.join(' or ').toString();
+        let htmlText = `
+        <div class="disable-msg alert alert-info" role="alert"">
+        Note: There are no members of the ${partyText} in the selected state.
+        </div>`
+        checkDiv.insertAdjacentHTML('afterend', htmlText);
     }
 }
 
@@ -122,7 +143,7 @@ stateList.addEventListener('change', checkFilter);
 let checkboxes = document.querySelectorAll('input[type=checkbox]');
 for (const checkbox of checkboxes) {
         checkbox.addEventListener('change', checkFilter);
-    }
+}
 function checkFilter() {
     let filterPartyArr = [];
     let filterState = 'All';
