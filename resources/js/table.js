@@ -2,10 +2,20 @@
 let stateList = document.querySelector('#state-option');
 let checkboxes = document.querySelectorAll('input[type=checkbox]');
 let tableTag = document.getElementById("table-data"); //The Table
-let apiURL = tableTag.getAttribute('data-url');
+
 //ASYNC ---
 let members = [];
-const getData = async (url) => {
+const getData = async () => {
+
+    let pathName = window.location.pathname;
+    let congress = '';
+    if (pathName.includes('house')) {
+        congress = 'house';
+    } else {
+        congress = 'senate';
+    }
+    let url = `https://api.propublica.org/congress/v1/113/${congress}/members.json`;
+
     members = await fetch(url, {
         method: "GET",
         headers: {
@@ -26,7 +36,7 @@ const getData = async (url) => {
 
 }
 window.onload = () => { //Runs on load to start Async
-    getData(apiURL);
+    getData();
 };
 
 //FUNCTIONS ++++++++++++

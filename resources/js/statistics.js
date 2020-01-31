@@ -12,12 +12,22 @@ var party_members = {
     republicans: [],
     independents: []
 }
-let page = document.querySelector('body div').getAttribute('data-page-type');
-let congress = document.querySelector('body div').getAttribute('data-congress-type');
-let apiURL = `https://api.propublica.org/congress/v1/113/${congress}/members.json`
+// let page = document.querySelector('body div').getAttribute('data-page-type');
+
+
 //ASYNC ---
 let members = [];
-const getData = async (url) => {
+const getData = async () => {
+    let pathName = window.location.pathname;
+
+    let congress = '';
+    if (pathName.includes('house')) {
+        congress = 'house';
+    } else {
+        congress = 'senate';
+    }
+    let url = `https://api.propublica.org/congress/v1/113/${congress}/members.json`;
+
     members = await fetch(url, {
         method: "GET",
         headers: {
@@ -29,18 +39,18 @@ const getData = async (url) => {
 
     updateStatistics();
     popluateGlance();
-    if (page == 'attendance'){
+    if (pathName.includes('attendance')) {
         popEngageTbls('.tbl-bot-attend tbody', '.tbl-top-attend tbody');
-    } else if (page == 'loyalty'){
+    } else if (pathName.includes('loyalty')) {
         popLoyalTbls('.tbl-bot-loyal tbody', '.tbl-top-loyal tbody');
     }
     loaderToggle();
 }
-        
+
 window.onload = () => { //Runs on load to start Async
-    getData(apiURL);
+    getData();
 };
-function loaderToggle(){
+function loaderToggle() {
     let loader = document.getElementById('loader');
     loader.classList.toggle('hidden');
 }
@@ -120,7 +130,7 @@ function popluateGlance() { // Populates the at a glance tables
 function insertRows10pct(table, array, prop2, prop3) { // refactored from populateEngageTbls
     let tableTarget = document.querySelector(table);
     let pct10 = Math.floor((array.length / 100) * 10);
-    while (array[pct10][prop3] === array[pct10+1][prop3]) {
+    while (array[pct10][prop3] === array[pct10 + 1][prop3]) {
         pct10++
     }
     for (let i = pct10; i > 0; i--) {
