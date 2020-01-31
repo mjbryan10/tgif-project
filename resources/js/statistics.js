@@ -1,3 +1,4 @@
+//GLOBAL VARIABLES
 var statistics = {
     n_democrats: 0,
     n_republicans: 0,
@@ -11,9 +12,31 @@ var party_members = {
     republicans: [],
     independents: []
 }
+let congress = document.querySelector('body div').getAttribute('data-congress-type');
+console.log("TCL: congress", congress)
+let apiURL = `https://api.propublica.org/congress/v1/113/${congress}/members.json`
+//ASYNC ---
+let members = [];
+const getData = async (url) => {
+    members = await fetch(url, {
+        method: "GET",
+        headers: {
+            "X-API-Key": "T52gp8pFQzvOnof9mUsb0wOdHLARM6ZlEza0hTn2"
+        }
+    })
+        .then(response => response.json())
+        .then(data => data.results[0].members)
+
+    updateStatistics();
+    popluateGlance();
+
+}
+        
+window.onload = () => { //Runs on load to start Async
+    getData(apiURL);
+};
 
 function generatePartyList() {//populates obj with array of party members
-    let members = data.results[0].members;
     for (const member of members) {
         switch (member.party) {
             case "D":
@@ -55,8 +78,9 @@ function updateStatistics() { // Updates the stats so the other functions can ru
 }
 
 function sortMembers(property, reverse = false) { // Sorts the members list by given property
-    let dataset = data.results[0].members;
-    let new_dataset = dataset.slice();
+    console.log("TCL: sortMembers -> members", members)
+    let new_dataset = members.slice();
+    console.log("TCL: sortMembers -> new_dataset", new_dataset)
     function compare(a, b) {
         if (reverse === true) {
             return b[`${property}`] - a[`${property}`];
@@ -107,9 +131,4 @@ function popLoyalTbls(table1, table2) {
     insertRows10pct(table1, sortMembers('votes_with_party_pct'), 'total_votes', 'votes_with_party_pct');
     insertRows10pct(table2, sortMembers('votes_with_party_pct', true), 'total_votes', 'votes_with_party_pct');
 
-}
-
-window.onload = () => {
-    updateStatistics();
-    popluateGlance();
 }
