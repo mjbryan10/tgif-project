@@ -2,6 +2,21 @@
 $light-grey: rgba(0,0,0,.05);
 $border-black: black solid 1px;
 
+#loader {
+    display: block;
+    position: relative;
+    margin:0 auto;
+    &.mutli-table {
+        position: fixed;
+        left:50%;
+        margin-left: -43.5px;
+        top: 50%;
+        margin-top: -.5em;
+    }
+    &.hidden{
+        display:none;
+    }
+}
 
 tr > th:first-child,
 tr > td:first-child {

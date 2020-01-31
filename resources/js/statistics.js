@@ -1,3 +1,4 @@
+//GLOBAL VARIABLES
 var statistics = {
     n_democrats: 0,
     n_republicans: 0,
@@ -11,8 +12,40 @@ var party_members = {
     republicans: [],
     independents: []
 }
+let page = document.querySelector('body div').getAttribute('data-page-type');
+let congress = document.querySelector('body div').getAttribute('data-congress-type');
+let apiURL = `https://api.propublica.org/congress/v1/113/${congress}/members.json`
+//ASYNC ---
+let members = [];
+const getData = async (url) => {
+    members = await fetch(url, {
+        method: "GET",
+        headers: {
+            "X-API-Key": "T52gp8pFQzvOnof9mUsb0wOdHLARM6ZlEza0hTn2"
+        }
+    })
+        .then(response => response.json())
+        .then(data => data.results[0].members)
+
+    updateStatistics();
+    popluateGlance();
+    if (page == 'attendance'){
+        popEngageTbls('.tbl-bot-attend tbody', '.tbl-top-attend tbody');
+    } else if (page == 'loyalty'){
+        popLoyalTbls('.tbl-bot-loyal tbody', '.tbl-top-loyal tbody');
+    }
+    loaderToggle();
+}
+        
+window.onload = () => { //Runs on load to start Async
+    getData(apiURL);
+};
+function loaderToggle(){
+    let loader = document.getElementById('loader');
+    loader.classList.toggle('hidden');
+}
+
 function generatePartyList() {//populates obj with array of party members
-    let members = data.results[0].members;
     for (const member of members) {
         switch (member.party) {
             case "D":
@@ -54,8 +87,7 @@ function updateStatistics() { // Updates the stats so the other functions can ru
 }
 
 function sortMembers(property, reverse = false) { // Sorts the members list by given property
-    let dataset = data.results[0].members;
-    let new_dataset = dataset.slice();
+    let new_dataset = members.slice();
     function compare(a, b) {
         if (reverse === true) {
             return b[`${property}`] - a[`${property}`];
@@ -84,28 +116,13 @@ function popluateGlance() { // Populates the at a glance tables
         partyRow++;
     }
 }
-/*
-function populateEngageTbls(){ // Populates both enagement tables -- old
-    let leastTbl = document.querySelector('.tbl-bot-attend tbody');
-    let mostTbl = document.querySelector('.tbl-top-attend tbody');
-    let leastArray = sortMembers('missed_votes_pct');
-    let mostArray = sortMembers('missed_votes_pct', true);
-    let pct10 = (leastArray.length / 100 )* 10;
-    for (let i = pct10; i > 0; i--) {
-        const leastMember = leastArray[i];
-        let leasthtml = `<tr><td>${leastMember.first_name} ${leastMember.middle_name || ''} ${leastMember.last_name}</td><td>${leastMember.missed_votes}</td><td>${leastMember.missed_votes_pct}</td></tr>`
-        leastTbl.insertAdjacentHTML('afterbegin', leasthtml);
-        
-        const mostMember = mostArray[i];
-        let mosthtml = `<tr><td>${mostMember.first_name} ${mostMember.middle_name || ''} ${mostMember.last_name}</td><td>${mostMember.missed_votes}</td><td>${leastMember.missed_votes_pct}</td></tr>`
-        mostTbl.insertAdjacentHTML('afterbegin', mosthtml);
-    }
 
-}
-*/
-function insertRows10pct(table, array, prop2, prop3){ // refactored from populateEngageTbls
+function insertRows10pct(table, array, prop2, prop3) { // refactored from populateEngageTbls
     let tableTarget = document.querySelector(table);
-    let pct10 = Math.floor((array.length / 100 ) * 10);
+    let pct10 = Math.floor((array.length / 100) * 10);
+    while (array[pct10][prop3] === array[pct10+1][prop3]) {
+        pct10++
+    }
     for (let i = pct10; i > 0; i--) {
         const member = array[i];
         let fullName = `${member.first_name} ${member.middle_name || ''} ${member.last_name}`
@@ -113,21 +130,12 @@ function insertRows10pct(table, array, prop2, prop3){ // refactored from populat
         tableTarget.insertAdjacentHTML('afterbegin', hmtlString);
     }
 }
-function popEngageTbls(table1, table2){ //Needs to be on specific page?
-    insertRows10pct(table1, sortMembers('missed_votes_pct'), 'total_votes', 'missed_votes_pct');
-    insertRows10pct(table2, sortMembers('missed_votes_pct', true), 'total_votes', 'missed_votes_pct');
+function popEngageTbls(table1, table2) { //Needs to be on specific page?
+    insertRows10pct(table1, sortMembers('missed_votes_pct', true), 'missed_votes', 'missed_votes_pct');
+    insertRows10pct(table2, sortMembers('missed_votes_pct'), 'missed_votes', 'missed_votes_pct');
 }
 function popLoyalTbls(table1, table2) {
     insertRows10pct(table1, sortMembers('votes_with_party_pct'), 'total_votes', 'votes_with_party_pct');
     insertRows10pct(table2, sortMembers('votes_with_party_pct', true), 'total_votes', 'votes_with_party_pct');
 
 }
-
-window.onload = () => {
-    updateStatistics();
-    popluateGlance();
-}
-
-
-
-
