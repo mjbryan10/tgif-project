@@ -34,12 +34,16 @@ const getData = async (url) => {
     } else if (page == 'loyalty'){
         popLoyalTbls('.tbl-bot-loyal tbody', '.tbl-top-loyal tbody');
     }
-
+    loaderToggle();
 }
         
 window.onload = () => { //Runs on load to start Async
     getData(apiURL);
 };
+function loaderToggle(){
+    let loader = document.getElementById('loader');
+    loader.classList.toggle('hidden');
+}
 
 function generatePartyList() {//populates obj with array of party members
     for (const member of members) {

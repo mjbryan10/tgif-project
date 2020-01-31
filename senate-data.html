@@ -100,7 +100,12 @@
 						  </div>
 					</div>
 				</div>
-				<table id="table-data" class="table table-striped text-center" data-url="https://api.propublica.org/congress/v1/113/senate/members.json"></table>
+				<table id="table-data" class="table table-striped text-center" data-url="https://api.propublica.org/congress/v1/113/senate/members.json">
+					<button id="loader" class="btn btn-primary" type="button" disabled>
+						<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+						Loading...
+					</button>
+				</table>
 			</div>
 			<footer class="col-12 d-flex justify-content-center align-items-center">
 				<p>&#9400; 2016 TGIF</p>

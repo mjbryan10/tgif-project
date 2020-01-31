@@ -22,6 +22,7 @@ const getData = async (url) => {
     }
 
     updateTable();
+    loaderToggle();
 
 }
 window.onload = () => { //Runs on load to start Async
@@ -30,6 +31,11 @@ window.onload = () => { //Runs on load to start Async
 
 //FUNCTIONS ++++++++++++
 
+//LOADER
+function loaderToggle(){
+    let loader = document.getElementById('loader');
+    loader.classList.toggle('hidden');
+}
 // HELPER FUNCTIONS --- 
 String.prototype.capitalize = function () {
     return this.charAt(0).toUpperCase() + this.slice(1);
