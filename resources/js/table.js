@@ -1,7 +1,6 @@
 //GLOBAL VARIABLES
 let stateList = document.querySelector('#state-option');
 let checkboxes = document.querySelectorAll('input[type=checkbox]');
-let tableTag = document.getElementById("table-data"); //The Table
 
 //ASYNC ---
 let members = [];
