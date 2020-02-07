@@ -1,5 +1,4 @@
 //GLOBAL VARIABLES
-import {API_KEY} from './keys.js'
 var statistics = {
     n_democrats: 0,
     n_republicans: 0,
