@@ -1,4 +1,5 @@
 //GLOBAL VARIABLES
+import {API_KEY} from './keys.js'
 var statistics = {
     n_democrats: 0,
     n_republicans: 0,
@@ -31,7 +32,7 @@ const getData = async () => {
     members = await fetch(url, {
         method: "GET",
         headers: {
-            "X-API-Key": "T52gp8pFQzvOnof9mUsb0wOdHLARM6ZlEza0hTn2"
+            "X-API-Key": API_KEY
         }
     })
         .then(response => response.json())
