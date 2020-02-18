@@ -27,7 +27,7 @@ const getData = async () => {
         congress = 'senate';
     }
     let url = `https://api.propublica.org/congress/v1/113/${congress}/members.json`;
-
+    const API_KEY = 'ep264BMj0231FmcvSpGGT2eKdOYgx8aR62qljmOz';
     members = await fetch(url, {
         method: "GET",
         headers: {
