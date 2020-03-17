@@ -1,6 +1,6 @@
 # tgif-project
 
-This website uses data from the USA Congress, via the [ProPublica API](https://www.propublica.org/datastore/api/propublica-congress-api). 
+This website uses data from the USA Congress, via the [ProPublica API](https://www.propublica.org/datastore/api/propublica-congress-api). The website has been styled using Bootstrap 4. 
 
 ## Technologies
 * Javascript
@@ -8,6 +8,10 @@ This website uses data from the USA Congress, via the [ProPublica API](https://w
 * CSS
 * [Bootstrap 4](https://getbootstrap.com/)
 * HTML
+
+## Live Demo
+
+Click [here](https://mjbryan10.github.io/tgif-project/) to check out the live demo.
 
 ## Additional notes: 
 
