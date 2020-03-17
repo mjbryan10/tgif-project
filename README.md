@@ -13,4 +13,4 @@ This website uses data from the USA Congress, via the [ProPublica API](https://w
 
 The tables are built dynamically using Javascript and designed with scalability in mind.
 
-There is a version of this project using Vue.js, that can be found [here](https://github.com/mjbryan10/tgif-project)
+There is a version of this project using Vue.js, that can be found [here](https://github.com/mjbryan10/tgif-project-vue).
